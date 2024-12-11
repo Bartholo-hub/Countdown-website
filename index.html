@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIKA 2.0 Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://a0.muscache.com/im/pictures/miso/Hosting-18731036/original/84d6f63b-1e1f-4124-a08a-0f36e20e9e5c.jpeg?im_w=1440&im_format=avif') no-repeat center center/cover;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #content-wrapper {
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+        }
+
+        #countdown {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #register-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            color: white;
+            background: #ff5733;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+
+        #register-btn:hover {
+            background: #c44127;
+        }
+
+        #start-audio-btn {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #start-audio-btn::before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 15px solid black;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        #start-audio-btn:hover {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <audio id="countdown-audio" preload="auto">
+        <source src="Countdownmuziek.mp3" type="audio/mpeg">
+        Uw browser ondersteunt het audiocomponent niet.
+    </audio>
+    <div id="content-wrapper">
+        <h1>FIKA 2.0</h1>
+        <p>Hallo leuke collega! Ga je mee?</p>
+        <p>Samen met een gezellige groep collega’s organiseren we in 2025 wederom een onvergetelijk weekend vol plezier en ontspanning. 
+        Denk aan: borrelen, dansen, themafeesten, spel, én genieten van wellness (zwembad, jacuzzi, sauna). 
+        Dit alles in het prachtige Chateau de Tihange.</p>
+        <p>Vertrek: donderdagochtend 12 juni<br>
+        Terug: zondagmiddag 15 juni<br>
+        Kosten: €440 all-in (vervoer, verblijf, eten, drinken, feesten, activiteiten).</p>
+        <p>Wij hebben er superveel zin in. Jij ook? Meld je snel aan via de link en mis het niet!</p>
+        <p>Veel liefs van de FIKA commissie!</p>
+        <div id="countdown">Laden...</div>
+        <a id="register-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSefSE0WH_3ZoPWaOI6eUSvdYWUbguIsXYjylTKQZS3yFp5zyA/viewform?usp=sf_link" target="_blank">Meld je nu aan</a>
+        <br>
+        <button id="start-audio-btn" onclick="playAudio()"></button>
+    </div>
+
+    <script>
+        // Stel de datum en tijd van het evenement in
+        const eventDate = new Date('June 12, 2025 17:00:00').getTime();
+
+        // Update de countdown elke seconde
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const timeLeft = eventDate - now;
+
+            // Berekeningen voor dagen, uren, minuten en seconden
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Toon het resultaat
+            const countdownElement = document.getElementById('countdown');
+            if (timeLeft > 0) {
+                countdownElement.textContent = `${days}d ${hours}u ${minutes}m ${seconds}s`;
+            } else {
+                countdownElement.textContent = 'Het evenement is begonnen!';
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+
+        // Functie om de audio af te spelen
+        function playAudio() {
+            const audioElement = document.getElementById('countdown-audio');
+            audioElement.play();
+        }
+    </script>
+</body>
+</html>
