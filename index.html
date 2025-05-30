@@ -12,7 +12,9 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: url('https://a0.muscache.com/im/pictures/miso/Hosting-18731036/original/84d6f63b-1e1f-4124-a08a-0f36e20e9e5c.jpeg?im_w=1440&im_format=avif') no-repeat center center/cover;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             text-align: center;
@@ -107,21 +109,17 @@
     </div>
 
     <script>
-        // Stel de datum en tijd van het evenement in
+        // Countdown
         const eventDate = new Date('June 12, 2025 17:00:00').getTime();
-
-        // Update de countdown elke seconde
         const countdownInterval = setInterval(() => {
             const now = new Date().getTime();
             const timeLeft = eventDate - now;
 
-            // Berekeningen voor dagen, uren, minuten en seconden
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            // Toon het resultaat
             const countdownElement = document.getElementById('countdown');
             if (timeLeft > 0) {
                 countdownElement.textContent = `${days}d ${hours}u ${minutes}m ${seconds}s`;
@@ -131,22 +129,41 @@
             }
         }, 1000);
 
-        // Functie om de audio te starten of stoppen
+        // Audio toggle
         function toggleAudio() {
             const audioElement = document.getElementById('countdown-audio');
             const buttonElement = document.getElementById('start-audio-btn');
 
             if (audioElement.paused) {
-                audioElement.play();  // Start de audio
-                buttonElement.style.background = '#e0e0e0'; // Verander de knopkleur
-                buttonElement.innerHTML = '&#10074;&#10074;'; // Zet pauze icoon (tweede pijltje)
+                audioElement.play();
+                buttonElement.style.background = '#e0e0e0';
+                buttonElement.innerHTML = '&#10074;&#10074;';
             } else {
-                audioElement.pause(); // Stop de audio
-                buttonElement.style.background = '#ffffff'; // Zet de knopkleur terug
-                buttonElement.innerHTML = ''; // Zet de knop terug naar een lege staat
+                audioElement.pause();
+                buttonElement.style.background = '#ffffff';
+                buttonElement.innerHTML = '';
                 buttonElement.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.2)';
             }
         }
+
+        // Achtergrond diashow
+        const backgrounds = [
+            "https://a0.muscache.com/im/pictures/miso/Hosting-18731036/original/84d6f63b-1e1f-4124-a08a-0f36e20e9e5c.jpeg",
+            "images/foto1.jpg",
+            "images/foto2.jpg",
+            "https://a0.muscache.com/im/pictures/3ab3ab00-3678-4cf6-82b3-cdb2b1ec9d2d.jpg?im_w=1440"
+        ];
+
+        let currentIndex = 0;
+
+        function changeBackground() {
+            document.body.style.backgroundImage = `url('${backgrounds[currentIndex]}')`;
+            currentIndex = (currentIndex + 1) % backgrounds.length;
+        }
+
+        // Start met de eerste achtergrond en stel interval in
+        changeBackground();
+        setInterval(changeBackground, 6000);
     </script>
 </body>
 </html>
